@@ -336,7 +336,8 @@ void ESPFMfGK::fileManagerIndexpage(void)
     return; 
   }
   
-  fileManager->send(200, F("text/html"), FPSTR(ESPFMfGKWpindexpage));
+  //fileManager->send(200, F("text/html"), FPSTR(ESPFMfGKWpindexpage));
+  fileManager->send_P(200, "text/html", ESPFMfGKWpindexpage, sizeof(ESPFMfGKWpindexpage)-1);
 }
 
 //*****************************************************************************************************
@@ -346,7 +347,8 @@ void ESPFMfGK::fileManagerJS(void)
     return; 
   }
 
-  fileManager->send(200, F("text/javascript"), FPSTR(ESPFMfGKWpjavascript));
+  //fileManager->send(200, F("text/javascript"), FPSTR(ESPFMfGKWpjavascript));
+ fileManager->send_P(200, "text/javascript", ESPFMfGKWpjavascript, sizeof(ESPFMfGKWpjavascript)-1);
 }
 
 //*****************************************************************************************************
@@ -356,7 +358,8 @@ void ESPFMfGK::fileManagerCSS(void)
     return; 
   }
 
-  fileManager->send(200, F("text/css"), FPSTR(ESPFMfGKWpcss));
+  //fileManager->send(200, F("text/css"), FPSTR(ESPFMfGKWpcss));
+  fileManager->send_P(200, "text/css", ESPFMfGKWpcss, sizeof(ESPFMfGKWpcss)-1);
 }
 
 //*****************************************************************************************************
@@ -364,10 +367,10 @@ String ESPFMfGK::CheckFileNameLengthLimit(String fn)
 {
   // SPIFFS file name limit. Is there a way to get the max length from SPIFFS/LittleFS?
   //                                      SPIFFS_OBJ_NAME_LEN is spifLittleFS.... but not very clean.
-  if (fn.length() > 32)
+  if (fn.length() > 255)
   {
     int len = fn.length();
-    fn.remove(29);
+    fn.remove(250);
     fn += String(len);
   }
 
